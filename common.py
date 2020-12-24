@@ -221,9 +221,6 @@ print("id:%d,pos:%d" % (j, r))
 #     return l
 # qsort(arr,0,len(arr)-1)
 
-print(ord('z'), ord('a'))
-print(chr(ord('a') + ((ord('b') - ord('a') + 1 - 1) % 26)))
-print(chr(ord('a') + 1))
 test = [2, 2, 1, 2]
 cnt = [0] * 3
 ans1 = [0] * 3
@@ -240,7 +237,4 @@ print(bisect.bisect_right(a, 10), bisect.bisect_right(a, 4), bisect.bisect_left(
 print("003000".lstrip('0'))
 print("333??".count('?'))
 print(list(itertools.accumulate(a)))
-print(itertools.product(a))
-print(11 % 4, 7 % 4)
 print("".find(""))
-print(math.factorial(10))
