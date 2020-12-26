@@ -1,8 +1,10 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # @oj: codeforces
 # @id: hitwanyang
 # @email: 296866643@qq.com
-# @date: 2020/12/26 0:25
-# @url: https://codeforc.es/contest/1468/problem/K
+# @date: 2020/12/25 18:53
+# @url: https://codeforc.es/contest/1152/problem/B
 import sys, os
 from io import BytesIO, IOBase
 import collections, itertools, bisect, heapq, math, string
@@ -72,47 +74,37 @@ input = lambda: sys.stdin.readline().rstrip("\r\n")
 ## 字符串拼接不要用+操作，会超时
 ## 二进制转换:bin(1)[2:].rjust(32,'0')
 ## array copy:cur=array[::]
-## oeis:example 1, 3, _, 1260, _, _, _, _, _, 12164510040883200
+## oeis(CROSSREFS):example 1, 3, _, 1260, _, _, _, _, _, 12164510040883200
 ## sqrt:Decimal(x).sqrt()避免精度误差
+## 无穷大表示:float('inf')
+## py 10**6 排序+双指针 3秒可能TLE
+## 按区间右端点排序,current.left>pre.right,贪心求不相交区间的最大个数
+## 加法>位运算
 def main():
-	t = int(input())
-	for i in range(t):
-		s = str(input())
-		direct = {"L": (-1, 0), "R": (1, 0), "D": (0, -1), "U": (0, 1)}
-		pos = (0, 0)
-		ss = set()
-		for j in range(len(s)):
-			x = pos[0] + direct[s[j]][0]
-			y = pos[1] + direct[s[j]][1]
-			pos = (x, y)
-			if pos != (0, 0):
-				ss.add(pos)
-		ans = []
-		for p in ss:
-			tmp = (0, 0)
-			pre = tmp
-			j = 0
-			while j < len(s):
-				while j < len(s) and tmp != p:
-					pre = tmp
-					tmp = (tmp[0] + direct[s[j]][0], tmp[1] + direct[s[j]][1])
-					j += 1
-				if j == len(s):
-					break
-				tmp = pre
-				k = j
-				while k < len(s) and s[k] == s[k - 1]:
-					k += 1
-				j = k
-			if tmp == (0, 0) or (pre == (0, 0) and tmp == p):
-				ans.append(p[0])
-				ans.append(p[1])
+	x = int(input())
+	ans = []
+	bit = list([int(i) for i in bin(x)[2:]])
+	cnt = 0
+	for i in range(len(bit)):
+		if bit[i] != 1:
+			v = 2 ** (len(bit) - i) - 1
+			ans.append(len(bit) - i)
+			x = x ^ v
+			cnt+=1
+			if x==2**len(bit)-1:
 				break
+			x = x + 1
+			cnt+=1
+			if x==2**len(bit)-1:
+				break
+			bit = list([int(b) for b in bin(x)[2:]])
 
-		if len(ans) == 0:
-			print(0, 0)
-		else:
-			print(ans[0], ans[1])
+	if len(ans) == 0:
+		print(0)
+	else:
+		# print (x)
+		print(cnt)
+		print(" ".join([str(a) for a in ans]))
 
 
 if __name__ == "__main__":
