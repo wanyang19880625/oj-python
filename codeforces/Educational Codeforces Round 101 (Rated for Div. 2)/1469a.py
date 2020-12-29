@@ -74,7 +74,13 @@ def main():
     t=int(input())
     for i in range(t):
         s=str(input())
-        index=s.
+        j=s.find("(")
+        k=s.find(")")
+        cnt=s.count("?")
+        if j!=len(s)-1 and k!=0 and cnt%2==0:
+            print ("YES")
+        else:
+            print ("NO")
 
 if __name__ == "__main__":
     main()
