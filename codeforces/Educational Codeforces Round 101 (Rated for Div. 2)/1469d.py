@@ -1,8 +1,5 @@
-# @oj: codeforces
-# @id: hitwanyang
-# @email: 296866643@qq.com
-# @date: 2020/12/28 22:28
-# @url:https://codeforc.es/contest/1469/problem/A
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import sys, os
 from io import BytesIO, IOBase
 import collections, itertools, bisect, heapq, math, string
@@ -72,19 +69,45 @@ input = lambda: sys.stdin.readline().rstrip("\r\n")
 ## 字符串拼接不要用+操作，会超时
 ## 二进制转换:bin(1)[2:].rjust(32,'0')
 ## array copy:cur=array[::]
-## oeis:example 1, 3, _, 1260, _, _, _, _, _, 12164510040883200
+## oeis(CROSSREFS):example 1, 3, _, 1260, _, _, _, _, _, 12164510040883200
 ## sqrt:Decimal(x).sqrt()避免精度误差
+## 无穷大表示:float('inf')
+## py 10**6 排序+双指针 3秒可能TLE
+## 按区间右端点排序,current.left>pre.right,贪心求不相交区间的最大个数
+## 加法>位运算
 def main():
 	t = int(input())
 	for i in range(t):
-		s = str(input())
-		j = s.find("(")
-		k = s.find(")")
-		cnt = s.count("?")
-		if j != len(s) - 1 and k != 0 and cnt % 2 == 0:
-			print("YES")
-		else:
-			print("NO")
+		n = int(input())
+		res = []
+		a = 2
+		for j in range(2, math.ceil(math.sqrt(n)) + 1):
+			cnt = 0
+			x = n
+			v = j
+			mn, mx = j, n
+			tmp = []
+			while x > 1:
+				if x >= v:
+					x = math.ceil(x / v)
+					tmp.append([mx, mn])
+				else:
+					v = math.ceil(v / x)
+					tmp.append([mn, mx])
+				cnt += 1
+			if cnt <= 8 and v == 2:
+				res = tmp
+				a = j
+				break
+		ans = []
+		for j in range(2, n):
+			if j != a and j != n:
+				ans.append([j, j + 1])
+		for r in res:
+			ans.append(r)
+		print(len(ans))
+		for a in ans:
+			print(a[0], a[1])
 
 
 if __name__ == "__main__":

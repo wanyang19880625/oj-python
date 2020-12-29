@@ -64,7 +64,7 @@ from decimal import *
 print(Decimal(1) / Decimal(100000))
 a = [1, 2, 3]
 t = a[:]
-print(bin(3)[2:].rjust(10, '0'))
+print("左补0:",bin(3)[2:].rjust(10, '0'))
 
 
 # import matplotlib.pyplot as plt
@@ -239,10 +239,10 @@ heapq.heappush(heap, (1, 1))
 heapq.heappush(heap, (1, 2))
 heapq.heappush(heap, (1, 3))
 print(heapq.heappop(heap))
-a = [1, 1, 2, 2, 3, 4]
-print(bisect.bisect_right(a, 10), bisect.bisect_right(a, 4), bisect.bisect_left(a, 4))
+a = [1, 20, 30, 40]
+print(bisect.bisect_left(a,0), bisect.bisect_right(a, 3), bisect.bisect_left(a, 4))
 print("003000".lstrip('0'))
 print("333??".count('?'))
 print(list(itertools.accumulate(a)))
 print("".find(""))
-print (bin(1048512^63))
+print (558240772^534710168)
