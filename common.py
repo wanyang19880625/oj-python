@@ -245,4 +245,10 @@ print("003000".lstrip('0'))
 print("333??".count('?'))
 print(list(itertools.accumulate(a)))
 print("".find(""))
-print (558240772^534710168)
+x=[1,7]
+ans=0
+for i in range(len(x)):
+	for j in range(len(x)):
+		for k in range(len(x)):
+			ans+=(x[i]&x[j])*(x[j]|x[k]) 
+print (1&7,1|7,(1&7)*(1|7),ans)
