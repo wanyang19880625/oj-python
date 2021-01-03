@@ -252,3 +252,7 @@ for i in range(len(x)):
 		for k in range(len(x)):
 			ans+=(x[i]&x[j])*(x[j]|x[k]) 
 print (1&7,1|7,(1&7)*(1|7),ans)
+nums=[1,2,2,2,3,5]
+print (bisect.bisect_left(nums,2),bisect.bisect_right(nums,2))
+
+
