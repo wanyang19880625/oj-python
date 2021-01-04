@@ -87,14 +87,17 @@ def main():
 		print(0)
 	else:
 		v = abs(a - b)
-		ans = 10 ** 9 + 1
-		for i in range(1, int(math.sqrt(v)) + 1):
-			if v % i == 0:
-				if i > mn:
-					ans = min(i - mn, ans)
-				if v // i > mn:
-					ans = min(v // i - mn, ans)
-		print(ans)
+		if v < mn:
+			print(math.ceil(mn / v) * v - mn)
+		else:
+			ans = 10 ** 9 + 1
+			for i in range(1, int(math.sqrt(v)) + 1):
+				if v % i == 0:
+					if i > mn:
+						ans = min(i - mn, ans)
+					if v // i > mn:
+						ans = min(v // i - mn, ans)
+			print(ans)
 
 
 if __name__ == "__main__":
