@@ -108,22 +108,23 @@ def main():
 		bit_and = []
 		# xj | xk
 		bit_or = []
-		s = sum(a) % mod
+		# s = sum(a) % mod
 		for x in b:
 			bit = x
-			v_and, v_or = 0, s
+			v_and, v_or = 0, 0
 			for j in range(61):
 				# weight = 2 ** (60 - j)
 				tmp = bit[j] * (weight[60 - j] % mod) * cnt[j]
 				v_and += tmp % mod
-				v_and = v_and % mod
+				# v_and = v_and % mod
+				v_or+=cnt[j]*weight[60-j]
 				if bit[j] == 1:
 					tmp = (n - cnt[j]) * (weight[60 - j] % mod)
 					v_or += tmp % mod
-					v_or = v_or % mod
+					# v_or = v_or % mod
 			# bit_and.append(v_and)
 			# bit_or.append(v_or)
-			ans += v_and * v_or
+			ans += v_and%mod * v_or%mod
 			ans = ans % mod
 
 		# for x in b:
