@@ -96,9 +96,36 @@ def main():
 				one.append([j, a[j]])
 			else:
 				two.append([j, a[j]])
-		so=sorted(one,key=lambda x:x[1])
-		st=sorted(two,key=lambda x:x[1])
-
+		res = []
+		so = sorted(one, key=lambda x: -x[1])
+		st = sorted(two, key=lambda x: -x[1])
+		v = 0
+		for j in range(len(so)):
+			if v < m:
+				v += so[j][1]
+				res.append(so[j][0])
+			else:
+				break
+		score = len(res)
+		if len(st) == 0:
+			print(min(ans, score))
+			continue
+		res.reverse()
+		l, r = 0, 0
+		while r < len(st):
+			while r < len(st) and v < m:
+				score += 2
+				v += st[r][1]
+				res.append(st[r][0])
+				r += 1
+			while v >= m:
+				ans = min(ans, score)
+				if len(res) == 0:
+					break
+				index = res.pop(0)
+				score -= b[index]
+				v -= a[index]
+		print(ans)
 
 
 if __name__ == "__main__":
