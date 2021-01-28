@@ -82,6 +82,7 @@ input = lambda: sys.stdin.readline().rstrip("\r\n")
 ## 加法>位运算
 def main():
     # https://codeforc.es/problemset/problem/1175/D
+    # i*a[i]最值问题 i代表分割数组的坐标位置,可以转换为前缀和的最值排序(sum-prefix[i])来做处理
     n = int(input())
     ab = []
     sa, sb = 0, 0
