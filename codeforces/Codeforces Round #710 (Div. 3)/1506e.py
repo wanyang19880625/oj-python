@@ -81,36 +81,35 @@ input = lambda: sys.stdin.readline().rstrip("\r\n")
 ## 按区间右端点排序,current.left>pre.right,贪心求不相交区间的最大个数
 ## 加法>位运算
 def main():
+	from collections import deque
 	t = int(input())
 	for i in range(t):
 		n = int(input())
 		a = list(map(int, input().split()))
 		mn, mx = [0] * n, [0] * n
-		s = set()
 		for j in range(n):
 			if j == 0 or a[j] != a[j - 1]:
 				mn[j], mx[j] = a[j], a[j]
-			s.add(a[j])
-		res = []
-		for x in range(1, n + 1):
-			if x not in s:
-				res.append(x)
-		index = 0
-		for j in range(n):
-			if mn[j] == 0:
-				mn[j] = res[index]
-				index += 1
-		stack = []
-		k = 1
-		for j in range(n):
-			if mx[j] != 0:
-				while k < mx[j]:
-					stack.append(k)
+
+		def get(res, pos):
+			q = deque([])
+			k = 1
+			for x in range(n):
+				if res[x] != 0:
+					while k < res[x]:
+						q.append(k)
+						k += 1
 					k += 1
-				k += 1
-			else:
-				v = stack.pop()
-				mx[j] = v
+				else:
+					if pos == 0:
+						v = q.popleft()
+					else:
+						v = q.pop()
+					res[x] = v
+			return res
+
+		get(mn, 0)
+		get(mx, -1)
 		print(" ".join([str(x) for x in mn]))
 		print(" ".join([str(x) for x in mx]))
 
