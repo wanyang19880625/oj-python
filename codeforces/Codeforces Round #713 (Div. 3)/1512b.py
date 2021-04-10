@@ -1,11 +1,15 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # @oj: codeforces
 # @id: hitwanyang
 # @email: 296866643@qq.com
-# @date: 2020-05-22 16:11
-# @url:https://codeforc.es/problemset/problem/1183/D
+# @date: 2021/4/10 22:28
+# @url:
 import sys,os
 from io import BytesIO, IOBase
 import collections,itertools,bisect,heapq,math,string
+from decimal import *
+from collections import deque
 # region fastio
 
 BUFSIZE = 8192
@@ -59,23 +63,58 @@ class IOWrapper(IOBase):
 sys.stdin, sys.stdout = IOWrapper(sys.stdin), IOWrapper(sys.stdout)
 input = lambda: sys.stdin.readline().rstrip("\r\n")
 # ------------------------------
+## 注意嵌套括号!!!!!!
+## 先有思路,再写代码,别着急!!!
+## 先有朴素解法,不要有思维定式,试着换思路解决
+## 精度 print("%.10f" % ans)
+## sqrt:int(math.sqrt(n))+1
+## 字符串拼接不要用+操作，会超时
+## 二进制转换:bin(1)[2:].rjust(32,'0')
+## array copy:cur=array[::]
+## oeis(CROSSREFS):example 1, 3, _, 1260, _, _, _, _, _, 12164510040883200
+## sqrt:Decimal(x).sqrt()避免精度误差
+## 无穷大表示:float('inf')
+## py 10**6 排序+双指针 3秒可能TLE
+## 按区间右端点排序,current.left>pre.right,贪心求不相交区间的最大个数
+## 加法>位运算
 def main():
-    q=int(input())
-    for i in range(q):
+    t=int(input())
+    for i in range(t):
         n=int(input())
-        a=list(map(int,input().split()))
-        d=collections.Counter(a)
-        # print (d)
-        sd=sorted(d.items(),key=lambda x: x[1],reverse=True)
-        s=set()
-        mn=len(a)
-        # print (sd)
-        for x in sd:
-            mn=min(mn,x[1])
-            if mn not in s and mn!=0:
-                s.add(mn)
-                mn=mn-1
-        # print (s)
-        print (sum(s))
+        m=[]
+        pos=[]
+        for j in range(n):
+            s=str(input())
+            tmp=list(s)
+            for k in range(n):
+                if s[k]=='*':
+                    pos.append([j,k])
+            m.append(tmp)
+        if pos[0][0]==pos[1][0]:
+            r=pos[0][0]
+            if r==n-1:
+                m[r-1][pos[0][1]]='*'
+                m[r-1][pos[1][1]]='*'
+            else:
+                m[r+1][pos[0][1]]='*'
+                m[r+1][pos[1][1]]='*'
+        elif pos[0][1]==pos[1][1]:
+            c=pos[0][1]
+            if c==n-1:
+                m[pos[0][0]][c-1]='*'
+                m[pos[1][0]][c-1]='*'
+            else:
+                m[pos[0][0]][c+1]='*'
+                m[pos[1][0]][c+1]='*'
+        else:
+            x1,y1=pos[0][0],pos[0][1]
+            x2,y2=pos[1][0],pos[1][1]
+            m[x1][y2]='*'
+            m[x2][y1]='*'
+        for r in m:
+            print("".join(r))
+
+
+
 if __name__ == "__main__":
     main()
