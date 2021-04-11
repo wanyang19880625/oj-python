@@ -4,7 +4,7 @@
 # @id: hitwanyang
 # @email: 296866643@qq.com
 # @date: 2021/4/10 22:28
-# @url:
+# @url:https://codeforc.es/contest/1512/problem/A
 import sys, os
 from io import BytesIO, IOBase
 import collections, itertools, bisect, heapq, math, string

@@ -3,18 +3,20 @@
 # @oj: codeforces
 # @id: hitwanyang
 # @email: 296866643@qq.com
-# @date: 2021/4/10 22:28
-# @url:https://codeforc.es/contest/1512/problem/B
-import sys,os
+# @date: 2021/4/10 22:36
+# @url:https://codeforc.es/contest/1512/problem/C
+import sys, os
 from io import BytesIO, IOBase
-import collections,itertools,bisect,heapq,math,string
+import collections, itertools, bisect, heapq, math, string
 from decimal import *
 from collections import deque
+
 # region fastio
 
 BUFSIZE = 8192
 
 BUFSIZE = 8192
+
 
 class FastIO(IOBase):
     newlines = 0
@@ -62,6 +64,8 @@ class IOWrapper(IOBase):
 
 sys.stdin, sys.stdout = IOWrapper(sys.stdin), IOWrapper(sys.stdout)
 input = lambda: sys.stdin.readline().rstrip("\r\n")
+
+
 # ------------------------------
 ## 注意嵌套括号!!!!!!
 ## 先有思路,再写代码,别着急!!!
@@ -78,42 +82,68 @@ input = lambda: sys.stdin.readline().rstrip("\r\n")
 ## 按区间右端点排序,current.left>pre.right,贪心求不相交区间的最大个数
 ## 加法>位运算
 def main():
-    t=int(input())
+    t = int(input())
     for i in range(t):
-        n=int(input())
-        m=[]
-        pos=[]
-        for j in range(n):
-            s=str(input())
-            tmp=list(s)
-            for k in range(n):
-                if s[k]=='*':
-                    pos.append([j,k])
-            m.append(tmp)
-        if pos[0][0]==pos[1][0]:
-            r=pos[0][0]
-            if r==n-1:
-                m[r-1][pos[0][1]]='*'
-                m[r-1][pos[1][1]]='*'
-            else:
-                m[r+1][pos[0][1]]='*'
-                m[r+1][pos[1][1]]='*'
-        elif pos[0][1]==pos[1][1]:
-            c=pos[0][1]
-            if c==n-1:
-                m[pos[0][0]][c-1]='*'
-                m[pos[1][0]][c-1]='*'
-            else:
-                m[pos[0][0]][c+1]='*'
-                m[pos[1][0]][c+1]='*'
-        else:
-            x1,y1=pos[0][0],pos[0][1]
-            x2,y2=pos[1][0],pos[1][1]
-            m[x1][y2]='*'
-            m[x2][y1]='*'
-        for r in m:
-            print("".join(r))
-
+        a, b = map(int, input().split())
+        s = str(input())
+        f = True
+        res = list(s)
+        l, r = 0, len(s) - 1
+        while l <= r:
+            if l == r:
+                if res[l] == '0':
+                    a -= 1
+                if res[l] == '1':
+                    b -= 1
+                break
+            if (res[l] == '0' and res[r] == '1') or (res[l] == '1' and res[r] == '0'):
+                f = False
+                break
+            if res[l] == res[r] and res[l] == '0':
+                a -= 2
+            if res[l] == res[r] and res[l] == '1':
+                b -= 2
+            if res[l] == '?' and res[r] != '?':
+                if res[r] == '0':
+                    a -= 2
+                    res[l] = '0'
+                else:
+                    b -= 2
+                    res[l] = '1'
+            if res[l] != '?' and res[r] == '?':
+                if res[l] == '0':
+                    a -= 2
+                    res[r] = '0'
+                else:
+                    b -= 2
+                    res[r] = '1'
+            l += 1
+            r -= 1
+        # print("".join(res))
+        if not f or a < 0 or b < 0:
+            print(-1)
+            continue
+        if a % 2 == 1 and b % 2 == 1:
+            print(-1)
+            continue
+        l, r = 0, len(s) - 1
+        while l < r:
+            if res[l] == '?' and res[r] == '?':
+                if a > 1:
+                    a -= 2
+                    res[l], res[r] = '0', '0'
+                else:
+                    if b > 1:
+                        b -= 2
+                        res[l], res[r] = '1', '1'
+            l += 1
+            r -= 1
+        # print(a, b)
+        if a > 0:
+            res[len(s) // 2] = '0'
+        if b > 0:
+            res[len(s) // 2] = '1'
+        print("".join(res))
 
 
 if __name__ == "__main__":
